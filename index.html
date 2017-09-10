@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Sign In Tutorial</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="437214321879-tup0oh04gleige2rg8s3hr96mf10f8n6.apps.googleusercontent.com">
+</head>
+
+<body onload="checkCredentials()">
+    <h1>Google Sign On Tutorial</h1>
+    <div class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+//437214321879-tup0oh04gleige2rg8s3hr96mf10f8n6.apps.googleusercontent.com
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+    localStorage.setItem("username_2", profile.getEmail());
+
+    window.location.href = "secured.html";
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function() {
+        console.log('User signed out.');
+    });
+}
+
+function checkCredentials() {
+    if (localStorage.getItem("setLogoutStatus")) {
+        console.log("Retrived sign out Callback !");
+        localStorage.removeItem("setLogoutStatus");
+        signOut();
+    }
+}
+</script>
